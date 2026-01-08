@@ -61,23 +61,23 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        if (!$request->is('supervisor/*')) {
+        if (! $request->is('supervisor/*')) {
             abort(403, 'Registrierung für Lernende nicht erlaubt.');
         }
 
         $data = $request->validate([
             'first_name' => 'required|string|max:255',
-            'surname'    => 'required|string|max:255',
-            'email'      => 'required|email|unique:users',
-            'password'   => 'required|min:6',
+            'surname' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
         ]);
 
         $user = User::create([
-            'first_name'    => $data['first_name'],
-            'surname'       => $data['surname'],
-            'email'         => $data['email'],
-            'password'      => Hash::make($data['password']),
-            'role'          => '2', // Supervisor
+            'first_name' => $data['first_name'],
+            'surname' => $data['surname'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role' => '2', // Supervisor
             'last_login_at' => now(),
             'last_login_ip' => $request->ip(),
         ]);
