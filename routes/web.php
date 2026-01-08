@@ -30,7 +30,6 @@ Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index'
 
 Route::controller(AuthController::class)->group(function () {
 
-    // Supervisor: Login & Register sind auf der GLEICHEN Seite
     Route::prefix('supervisor')->group(function () {
         Route::get('/login', 'showAuthForm')->name('supervisor.login');
 
@@ -39,13 +38,11 @@ Route::controller(AuthController::class)->group(function () {
         Route::post('/register', 'register')->name('supervisor.register.post');
     });
 
-    // Student: Nur Login
     Route::prefix('student')->group(function () {
         Route::get('/login', 'showAuthForm')->name('student.login');
         Route::post('/login', 'login')->name('student.login.post');
     });
 
-    // Logout für alle
     Route::post('/logout', 'logout')->name('logout');
 });
 
@@ -64,7 +61,6 @@ Route::middleware(['auth', 'role:2'])->prefix('supervisor')->group(function () {
 
 // Bereich für Lernende (Rolle 1)
 Route::middleware(['auth', 'role:1'])->prefix('student')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('student.dashboard');
-    })->name('student.dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\StudentDashboardController::class, 'index'])
+        ->name('student.dashboard');
 });

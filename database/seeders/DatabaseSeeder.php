@@ -45,5 +45,6 @@ class DatabaseSeeder extends Seeder
 
         // 5. Create more tasks to test the connection between the web and the database
         $task2 = $module->tasks()->create(['title' => 'Datenbank-Seeding']);
+
     }
 }
