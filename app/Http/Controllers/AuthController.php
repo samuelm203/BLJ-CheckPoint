@@ -9,13 +9,28 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Shows the login form
-    public function showAuthForm()
+    /**
+     * Zeigt das Login-Formular an (unterscheidet Student/Supervisor)
+     */
+    public function showAuthForm(Request $request)
     {
-        return view('auth.login');
+        // Wenn die URL mit 'supervisor/' beginnt
+        if ($request->is('supervisor/*')) {
+            return view('auth.login_supervisor');
+        }
+
+        // Standardmäßig für Students
+        return view('auth.login_student');
     }
 
-    // Logic for the login
+    /**
+     * Zeigt das Registrierungs-Formular (NUR für Supervisor)
+     */
+    public function showRegisterForm()
+    {
+        return view('auth.register_supervisor');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -24,33 +39,51 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            $user->update([
+                'last_login_at' => now(),
+                'last_login_ip' => $request->ip(),
+            ]);
+
             $request->session()->regenerate();
 
-            return redirect()->intended('home');
+            if ($user->role == '2') {
+                return redirect()->intended('/supervisor/dashboard');
+            }
+
+            return redirect()->intended('/student/dashboard');
         }
 
         return back()->withErrors(['email' => 'Zugangsdaten falsch.']);
     }
 
-    // Logic for the registration
     public function register(Request $request)
     {
+
+        if (!$request->is('supervisor/*')) {
+            abort(403, 'Registrierung für Lernende nicht erlaubt.');
+        }
+
         $data = $request->validate([
             'first_name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'surname'    => 'required|string|max:255',
+            'email'      => 'required|email|unique:users',
+            'password'   => 'required|min:6',
         ]);
 
         $user = User::create([
-            'first_name' => $data['first_name'],
-            'surname' => $data['surname'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'first_name'    => $data['first_name'],
+            'surname'       => $data['surname'],
+            'email'         => $data['email'],
+            'password'      => Hash::make($data['password']),
+            'role'          => '2', // Supervisor
+            'last_login_at' => now(),
+            'last_login_ip' => $request->ip(),
         ]);
 
         Auth::login($user);
 
-        return redirect('/home');
+        return redirect('/supervisor/dashboard');
     }
 }
