@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Task extends Model
 {
     protected $primaryKey = 'task_id';
+
     protected $fillable = ['title', 'module_id'];
 
     // One task belongs to one module

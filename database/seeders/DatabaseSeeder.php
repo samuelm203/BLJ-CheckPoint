@@ -22,14 +22,14 @@ class DatabaseSeeder extends Seeder
                 'first_name' => 'Max',
                 'surname' => 'Mustermann',
                 'password' => bcrypt('password'),
-                'role' => 1
+                'role' => 1,
             ]
         );
 
         // 2. Create a test module
         $module = \App\Models\Module::create([
             'module_name' => 'Einführung in Laravel',
-            'description' => 'Lerne die Grundlagen des Frameworks.'
+            'description' => 'Lerne die Grundlagen des Frameworks.',
         ]);
 
         // 3. Create some tasks for the test module
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         // 4. Connect the tasks to the user
         $user->tasks()->attach($task1->task_id, [
             'is_completed' => true,
-            'completion_date' => now()
+            'completion_date' => now(),
         ]);
 
         // 5. Create more tasks to test the connection between the web and the database

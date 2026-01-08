@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Module extends Model
 {
     protected $primaryKey = 'module_id';
+
     protected $fillable = ['module_name', 'description'];
 
     // A module has many tasks

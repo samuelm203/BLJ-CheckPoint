@@ -14,6 +14,6 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-
 use App\Http\Controllers\ModuleController;
+
 Route::get('/modules', [ModuleController::class, 'index']);
