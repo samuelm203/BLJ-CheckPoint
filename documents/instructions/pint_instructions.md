@@ -9,18 +9,18 @@ Open the terminal and run the following command:
   ```
 
 ### Run pint
-Open the terminal and run the following command:
-```bash
-   ./vendor/bin/pint
+   Open the terminal and run the following command to format the entire project:
+   ```bash
+   vendor/bin/pint
    ```
 
-### Run pint on a specific file
-Open the terminal and run the following command for a specific directory:
-```bash
-    ./vendor/bin/pint app/Example
-```
+### Run pint on changed files only
+   ```bash
+   vendor/bin/pint --dirty
+   ```
 
-Open the terminal and run the following command for a specific file:
-```bash
-    ./vendor/bin/pint app/Example/Example.php
-```
+### Run pint on a specific directory or file
+   ```bash
+   vendor/bin/pint app/Http/Controllers
+   vendor/bin/pint app/Models/User.php
+   ```
