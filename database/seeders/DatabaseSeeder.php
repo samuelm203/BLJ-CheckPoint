@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Einen Test-User erstellen
+        // 1. Create a test user
         $user = \App\Models\User::updateOrCreate(
             ['email' => 'max@example.com'],
             [
@@ -26,18 +26,18 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. Ein Modul erstellen
+        // 2. Create a test module
         $module = \App\Models\Module::create([
             'module_name' => 'Einführung in Laravel',
             'description' => 'Lerne die Grundlagen des Frameworks.'
         ]);
 
-        // 3. Drei Aufgaben (Tasks) für dieses Modul erstellen
+        // 3. Create some tasks for the test module
         $task1 = $module->tasks()->create(['title' => 'Installation']);
         $task2 = $module->tasks()->create(['title' => 'Erste Migration']);
         $task3 = $module->tasks()->create(['title' => 'Datenbank-Seeding']);
 
-        // 4. Den User mit den Aufgaben verknüpfen (z.B. Aufgabe 1 ist erledigt)
+        // 4. Connect the tasks to the user
         $user->tasks()->attach($task1->task_id, [
             'is_completed' => true,
             'completion_date' => now()

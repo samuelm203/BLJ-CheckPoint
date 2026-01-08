@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Module extends Model
 {
-    protected $primaryKey = 'module_id'; // Wichtig, da wir nicht 'id' nutzen
+    protected $primaryKey = 'module_id';
     protected $fillable = ['module_name', 'description'];
 
-    // Ein Modul hat viele Tasks
+    // A module has many tasks
     public function tasks(): HasMany
     {
         return $this->hasMany(Task::class, 'module_id', 'module_id');
     }
 
-    // Ein Modul wird von vielen Usern abgeschlossen (n:m)
+    // Many users complete a module
     public function completedByUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'has_user_completed', 'module_id', 'user_id')

@@ -23,7 +23,7 @@
             <x-nav-link href="/about" :active="request()->is('about')">Über Mich</x-nav-link>
         </div>
 
-        <!-- Login -->
+
         <div>
             <a href="#" class="text-base font-semibold text-white">
                 Login
