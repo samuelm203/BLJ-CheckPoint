@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('task_user', function (Blueprint $table) {
-            $table->foreignId('task_id')->constrained('tasks', 'task_id')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->boolean('is_completed')->default(false);
-            $table->timestamp('completion_date')->nullable();
-            $table->primary(['task_id', 'user_id']); // Verbundener Primärschlüssel
-        });
+        if (! Schema::hasTable('task_user')) {
+            Schema::create('task_user', function (Blueprint $table) {
+                $table->foreignId('task_id')->constrained()->cascadeOnDelete();
+                $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+                $table->boolean('is_completed')->default(false);
+                $table->timestamp('completion_date')->nullable();
+                $table->primary(['task_id', 'user_id']);
+            });
+        }
     }
-
     /**
      * Reverse the migrations.
      */
