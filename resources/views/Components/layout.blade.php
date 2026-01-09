@@ -7,7 +7,7 @@
     <title>CheckPoint</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-full flex flex-col bg-gray-100">
+<body class="h-full flex flex-col bg-[#d9d9d9]">
 
 <header class="bg-[#b05555] w-full">
     <nav class="mx-auto max-w-7xl flex items-center justify-between p-6">
@@ -27,7 +27,7 @@
     </nav>
 </header>
 
-<main class="flex-grow flex justify-center items-center">
+<main class="flex-grow flex justify-center">
     {{ $slot }}
 </main>
 

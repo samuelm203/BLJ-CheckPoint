@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    /**
-     * Zeigt das Login-Formular an (unterscheidet Student/Supervisor)
-     */
     public function showAuthForm(Request $request)
     {
         // Wenn die URL mit 'supervisor/' beginnt
@@ -23,9 +20,6 @@ class AuthController extends Controller
         return view('auth.login_student');
     }
 
-    /**
-     * Zeigt das Registrierungs-Formular (NUR für Supervisor)
-     */
     public function showRegisterForm()
     {
         return view('auth.register_supervisor');
@@ -38,7 +32,9 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $expectedRole = $request->is('supervisor/*') ? '2' : '1';
+
+        if (Auth::attempt(array_merge($credentials, ['role' => $expectedRole]))) {
             $user = Auth::user();
 
             $user->update([
@@ -55,7 +51,7 @@ class AuthController extends Controller
             return redirect()->intended('/student/dashboard');
         }
 
-        return back()->withErrors(['email' => 'Zugangsdaten falsch.']);
+        return back()->withErrors(['email' => 'Zugangsdaten falsch oder falsche Login-Seite.']);
     }
 
     public function register(Request $request)

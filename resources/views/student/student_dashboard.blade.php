@@ -1,33 +1,33 @@
-<div class="max-w-7xl mx-auto p-8">
-    <h1 class="text-3xl font-bold mb-8 text-gray-900">
-        Willkommen zurück {{ $user->first_name }} {{ $user->surname }}
-    </h1>
+<x-layout>
+    <div class="w-full max-w-7xl mx-auto mb-12 p-8 self-start">
+        <h1 class="text-4xl font-bold mb-12 text-black">
+            Willkommen zurück {{ $user->first_name }}
+        </h1>
 
-    <div class="mb-12">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">Meine Kurse</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            @foreach($alleModule as $module)
-                <div class="flex flex-col items-center group">
-                    <div class="w-full aspect-square bg-[#b05555] rounded-2xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform group-hover:scale-105">
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-black">Meine Kurse</h2>
+            <div class="flex flex-wrap gap-6">
+                @foreach($alleModule as $module)
+                    <div class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
                         {{ $module->name }}
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
 
-    <div>
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">Abgeschlossene Kurse</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            @forelse($abgeschlosseneModule as $module)
-                <div class="flex flex-col items-center opacity-60">
-                    <div class="w-full aspect-square bg-[#b05555] rounded-2xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold">
+        <div>
+            <h2 class="text-2xl font-bold mb-6 text-black">Abgeschlossene Kurse</h2>
+            <div class="flex flex-wrap gap-6">
+                @forelse($abgeschlosseneModule as $module)
+                    <div class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold">
                         {{ $module->name }}
                     </div>
-                </div>
-            @empty
-                <p class="text-gray-500 italic">Noch keine Kurse abgeschlossen.</p>
-            @endforelse
+                @empty
+                    <div class="flex flex-wrap gap-6">
+                        <p class="text-gray-600">Du hast noch keine Kurse abgeschlossen.</p>
+                    </div>
+                @endforelse
+            </div>
         </div>
     </div>
-</div>
+</x-layout>

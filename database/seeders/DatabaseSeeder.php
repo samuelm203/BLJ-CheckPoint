@@ -10,9 +10,6 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         // 1. Create a test user
@@ -32,19 +29,29 @@ class DatabaseSeeder extends Seeder
             'description' => 'Lerne die Grundlagen des Frameworks.',
         ]);
 
-        // 3. Create some tasks for the test module
+        // 3. Create tasks for the test module
         $task1 = $module->tasks()->create(['title' => 'Installation']);
         $task2 = $module->tasks()->create(['title' => 'Erste Migration']);
         $task3 = $module->tasks()->create(['title' => 'Datenbank-Seeding']);
+        $task4 = $module->tasks()->create(['title' => 'Eloquent ORM']);
+        $task5 = $module->tasks()->create(['title' => 'Routen und Controller']);
+        $task6 = $module->tasks()->create(['title' => 'Blade Templates']);
 
-        // 4. Connect the tasks to the user
-        $user->tasks()->attach($task1->task_id, [
-            'is_completed' => true,
-            'completion_date' => now(),
+        // 4. Connect all tasks to the user with different completion statuses
+        $user->tasks()->attach([
+            $task1->getKey() => ['is_completed' => true,  'completion_date' => now()],
+            $task2->getKey() => ['is_completed' => false, 'completion_date' => null],
+            $task3->getKey() => ['is_completed' => false, 'completion_date' => null],
+            $task4->getKey() => ['is_completed' => false, 'completion_date' => null],
+            $task5->getKey() => ['is_completed' => false, 'completion_date' => null],
+            $task6->getKey() => ['is_completed' => false, 'completion_date' => null],
         ]);
 
-        // 5. Create more tasks to test the connection between the web and the database
-        $task2 = $module->tasks()->create(['title' => 'Datenbank-Seeding']);
+        // 5. Create another test module
+        $module = \App\Models\Module::create([
+            'module_name' => 'Testmodul 2',
+            'description' => 'Testmodul Beschreibung.',
+        ]);
 
     }
 }

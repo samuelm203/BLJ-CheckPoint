@@ -15,7 +15,7 @@ class Module extends Model
     // A module has many tasks
     public function tasks(): HasMany
     {
-        return $this->hasMany(Task::class, 'module_id', 'module_id');
+        return $this->hasMany(Task::class, 'module_id');
     }
 
     // Many users complete a module

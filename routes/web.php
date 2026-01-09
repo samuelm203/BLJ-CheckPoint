@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::view('/', 'home')->name('home');
-Route::view('/about', 'about')->name('about');
-Route::view('/contact', 'contact')->name('contact');
-Route::view('/privacy', 'privacy')->name('privacy');
-Route::view('/terms', 'terms')->name('terms');
+Route::view('/about', 'start.about')->name('about');
+Route::view('/contact', 'start.contact')->name('contact');
+Route::view('/privacy', 'home')->name('privacy'); // Temporary fallback if views missing
+Route::view('/terms', 'home')->name('terms');     // Temporary fallback if views missing
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +40,9 @@ Route::controller(AuthController::class)->group(function () {
 
     Route::prefix('student')->group(function () {
         Route::get('/login', 'showAuthForm')->name('student.login');
+        Route::get('/login-redirect', function () {
+            return redirect()->route('student.login');
+        })->name('login'); // Added named 'login' route
         Route::post('/login', 'login')->name('student.login.post');
     });
 
