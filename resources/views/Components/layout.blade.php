@@ -16,9 +16,31 @@
         </div>
 
         <div class="flex font-semibold gap-x-6 items-center">
-            <a href="/" class="text-white hover:text-gray-300">Login</a>
-            <a href="/contact" class="text-white hover:text-gray-300">Kontakt</a>
-            <a href="/about" class="text-white hover:text-gray-300">Über Mich</a>
+            @auth
+                @if(auth()->user()->role == 1)
+                    @if(!request()->routeIs('student.dashboard'))
+                        <a href="{{ route('student.dashboard') }}" class="text-white hover:text-gray-300">Dashboard</a>
+                    @endif
+                @else
+                    @if(!request()->routeIs('supervisor.dashboard'))
+                        <a href="{{ route('supervisor.dashboard') }}" class="text-white hover:text-gray-300">Dashboard</a>
+                    @endif
+                @endif
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="text-white hover:text-gray-300">Logout</button>
+                </form>
+            @else
+                @if(!request()->routeIs('home'))
+                    <a href="/" class="text-white hover:text-gray-300">Login</a>
+                @endif
+                @if(!request()->routeIs('contact'))
+                    <a href="/contact" class="text-white hover:text-gray-300">Kontakt</a>
+                @endif
+                @if(!request()->routeIs('about'))
+                    <a href="/about" class="text-white hover:text-gray-300">Über Mich</a>
+                @endif
+            @endauth
         </div>
 
         <div>

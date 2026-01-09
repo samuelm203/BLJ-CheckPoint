@@ -129,6 +129,10 @@
             @csrf
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
+            <div style="margin: 10px 0; display: flex; align-items: center; color: white;">
+                <input type="checkbox" name="remember" id="remember_supervisor" style="width: auto; margin-right: 10px;">
+                <label for="remember_supervisor" style="font-size: 14px;">Angemeldet bleiben</label>
+            </div>
             <button type="submit" class="btn btn-login">Login</button>
         </form>
     </div>

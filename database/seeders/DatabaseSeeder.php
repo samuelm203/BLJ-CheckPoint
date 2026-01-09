@@ -53,5 +53,10 @@ class DatabaseSeeder extends Seeder
             'description' => 'Testmodul Beschreibung.',
         ]);
 
+        // 6. Mark the second module as completed for the user
+        $user->completedModules()->attach($module->module_id, [
+            'has_completed_user' => true,
+        ]);
+
     }
 }

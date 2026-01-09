@@ -11,6 +11,14 @@ class AuthController extends Controller
 {
     public function showAuthForm(Request $request)
     {
+        if (Auth::check()) {
+            if (Auth::user()->role == '2') {
+                return redirect()->route('supervisor.dashboard');
+            }
+
+            return redirect()->route('student.dashboard');
+        }
+
         // Wenn die URL mit 'supervisor/' beginnt
         if ($request->is('supervisor/*')) {
             return view('auth.login_supervisor');
@@ -32,9 +40,11 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $remember = $request->has('remember');
+
         $expectedRole = $request->is('supervisor/*') ? '2' : '1';
 
-        if (Auth::attempt(array_merge($credentials, ['role' => $expectedRole]))) {
+        if (Auth::attempt(array_merge($credentials, ['role' => $expectedRole]), $remember)) {
             $user = Auth::user();
 
             $user->update([
@@ -52,6 +62,16 @@ class AuthController extends Controller
         }
 
         return back()->withErrors(['email' => 'Zugangsdaten falsch oder falsche Login-Seite.']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
     public function register(Request $request)
