@@ -19,9 +19,26 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'supervisor_id',
         'last_login_at',
         'last_login_ip',
     ];
+
+    /**
+     * BEZIEHUNG: Ein Student hat einen Supervisor (n:1)
+     */
+    public function supervisor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'supervisor_id');
+    }
+
+    /**
+     * BEZIEHUNG: Ein Supervisor hat viele Studenten (1:n)
+     */
+    public function students(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(User::class, 'supervisor_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

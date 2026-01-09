@@ -13,8 +13,8 @@ return new class extends Migration
     {
         if (! Schema::hasTable('task_user')) {
             Schema::create('task_user', function (Blueprint $table) {
-                $table->foreignId('task_id')->constrained()->cascadeOnDelete();
-                $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+                $table->foreignId('task_id')->constrained('tasks', 'task_id')->cascadeOnDelete();
+                $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
                 $table->boolean('is_completed')->default(false);
                 $table->timestamp('completion_date')->nullable();
                 $table->primary(['task_id', 'user_id']);

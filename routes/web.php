@@ -57,9 +57,18 @@ Route::controller(AuthController::class)->group(function () {
 
 // Bereich für Coaches (Rolle 2)
 Route::middleware(['auth', 'role:2'])->prefix('supervisor')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('supervisor.dashboard');
-    })->name('supervisor.dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\SupervisorDashboardController::class, 'index'])
+        ->name('supervisor.dashboard');
+    Route::post('/students', [App\Http\Controllers\StudentController::class, 'store'])
+        ->name('supervisor.students.store');
+    Route::post('/modules', [ModuleController::class, 'store'])
+        ->name('supervisor.modules.store');
+    Route::get('/modules/{module}', [ModuleController::class, 'show'])
+        ->name('supervisor.modules.show');
+    Route::post('/modules/{module}/assign-students', [ModuleController::class, 'assignStudents'])
+        ->name('supervisor.modules.assign-students');
+    Route::post('/tasks', [App\Http\Controllers\TaskController::class, 'store'])
+        ->name('supervisor.tasks.store');
 });
 
 // Bereich für Lernende (Rolle 1)
