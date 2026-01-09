@@ -15,8 +15,8 @@ class CheckRole
             return redirect('/login');
         }
 
-        if ((string)Auth::user()->role !== $role) {
-            abort(403, 'Zugriff verweigert. Deine Rolle ist: ' . Auth::user()->role . ' - Benötigt: ' . $role);
+        if ((string) Auth::user()->role !== $role) {
+            abort(403, 'Zugriff verweigert. Deine Rolle ist: '.Auth::user()->role.' - Benötigt: '.$role);
         }
 
         return $next($request);
