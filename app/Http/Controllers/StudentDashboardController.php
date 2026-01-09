@@ -15,5 +15,6 @@ class StudentDashboardController extends Controller
 
         $abgeschlosseneModule = $user->completedModules;
 
-        return view('student.dashboard', compact('user', 'alleModule', 'abgeschlosseneModule'));    }
+        return view('student.student_dashboard', compact('user', 'alleModule', 'abgeschlosseneModule'));
+    }
 }

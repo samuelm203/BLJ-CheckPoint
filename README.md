@@ -1,25 +1,32 @@
 # CheckPoint 🚩
 
-CheckPoint is a modern, modular learning and task management system built with **Laravel 12**. It helps users track their progress through various modules and tasks with ease and precision.
+CheckPoint is a modern, modular learning and task management system built with **Laravel 12**. Designed for educational institutions and corporate training, it streamlines progress tracking for both students and supervisors.
 
 [![Laravel Version](https://img.shields.io/badge/Laravel-v12-FF2D20?style=flat-square&logo=laravel)](https://laravel.com)
 [![PHP Version](https://img.shields.io/badge/PHP-v8.4-777BB4?style=flat-square&logo=php)](https://www.php.net)
 [![Pest Testing](https://img.shields.io/badge/Tests-Pest-000000?style=flat-square)](https://pestphp.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-## ✨ Features
+## ✨ Key Features
 
-- 📂 **Module Management**: Organize learning content into structured modules.
-- ✅ **Task Tracking**: Detailed tasks within modules to track granular progress.
-- 👤 **User Profiles**: Custom user roles and extended profile fields (first name, surname).
-- 📊 **Progress Completion**: Native tracking for user module and task completion.
-- 🎨 **Modern UI**: Styled with Tailwind CSS for a sleek, responsive experience.
+### 👤 Dual-Role Support
+- **Supervisors**: Manage modules, register new accounts, and oversee the learning environment.
+- **Students**: Track personal learning progress, complete tasks, and view achievements.
+
+### 📂 Learning Management
+- **Modular Structure**: Organize content into logical learning modules.
+- **Granular Tasks**: Break down modules into actionable tasks for precise tracking.
+- **Progress Insights**: Native tracking for completion status at both module and task levels.
+
+### 🎨 Modern Experience
+- **Responsive UI**: Built with Tailwind CSS for a seamless experience across all devices.
+- **Clean Dashboards**: Tailored views for different user roles to maximize productivity.
 
 ## 🚀 Tech Stack
 
 - **Framework**: [Laravel 12](https://laravel.com)
 - **Language**: [PHP 8.4+](https://php.net)
-- **Database**: PostgreSQL / MySQL / SQLite (Laravel compatible)
+- **Database**: PostgreSQL / MySQL / SQLite
 - **Frontend**: [Tailwind CSS](https://tailwindcss.com) & [Vite](https://vitejs.dev)
 - **Testing**: [Pest PHP](https://pestphp.com)
 - **Tooling**: Laravel Boost & Laravel Herd
@@ -27,7 +34,6 @@ CheckPoint is a modern, modular learning and task management system built with *
 ## 🛠️ Getting Started
 
 ### Prerequisites
-
 - PHP 8.4 or higher
 - Composer
 - Node.js & NPM
@@ -42,7 +48,7 @@ CheckPoint is a modern, modular learning and task management system built with *
    ```
 
 2. **Run the setup command:**
-   We've included a handy setup script in `composer.json` to get you up and running quickly:
+   We've included a handy setup script to get you up and running quickly:
    ```bash
    composer run setup
    ```
@@ -58,22 +64,19 @@ CheckPoint is a modern, modular learning and task management system built with *
 
 ## 🧪 Testing
 
-We take quality seriously. Run the test suite using Pest:
+We maintain high standards through rigorous testing. Run the test suite using Pest:
 
-```bash
-composer test
-```
-Or directly via artisan:
 ```bash
 php artisan test
 ```
 
 ## 📂 Project Structure
 
-- `app/Models`: Contains `User`, `Module`, and `Task` models.
-- `database/migrations`: Defined schema for users, modules, tasks, and progress tracking.
-- `resources/views`: Blade templates using a unified layout component.
-- `routes/web.php`: Application entry points (Home, About, Contact).
+- `app/Models`: Core business logic (`User`, `Module`, `Task`).
+- `app/Http/Controllers`: Request handling for Auth, Dashboards, and Modules.
+- `database/migrations`: Relational schema for progress tracking.
+- `resources/views`: Blade templates with a component-based architecture.
+- `routes/web.php`: Defined access points for Students and Supervisors.
 
 ## 📄 License
 
