@@ -7,18 +7,20 @@
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-6 text-black">Meine Kurse</h2>
             <div class="flex flex-wrap gap-6">
-                @foreach($alleModule as $module)
+                @forelse($alleModule as $module)
                     <div class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
                         {{ $module->module_name }}
                     </div>
-                @endforeach
+                @empty
+                    <p class="text-gray-600">Du hast keine offene Kurse</p>
+                @endforelse
             </div>
         </div>
 
         <div>
             <h2 class="text-2xl font-bold mb-6 text-black">Abgeschlossene Kurse</h2>
             <div class="flex flex-wrap gap-6">
-                @forelse($abgeschlosseneModule as $module)
+                @forelse($abgeschlosseneModule as $module )
                     <div class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
                         {{ $module->module_name }}
                     </div>
