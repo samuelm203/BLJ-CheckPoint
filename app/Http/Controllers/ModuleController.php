@@ -17,7 +17,7 @@ class ModuleController extends Controller
             $modules = $user->createdModules()->with('tasks')->get();
         } elseif ($user && $user->role == 1) {
             // Student sieht die Module, denen er zugewiesen ist
-            $modules = $user->completedModules()->with('tasks')->get();
+            $modules = $user->assignedModules()->with('tasks')->get();
         } else {
             // Nicht eingeloggt oder andere Rolle - leere Liste oder alle öffentlichen
             $modules = Module::with('tasks')->get();
@@ -45,7 +45,7 @@ class ModuleController extends Controller
         }
 
         if (! empty($validated['students'])) {
-            $module->completedByUsers()->attach($validated['students'], ['has_completed_user' => false]);
+            $module->assignedStudents()->attach($validated['students'], ['has_completed_user' => false]);
         }
 
         return back()->with('success', 'Modul erfolgreich erstellt.');
@@ -53,10 +53,10 @@ class ModuleController extends Controller
 
     public function show(Module $module): \Illuminate\View\View
     {
-        $module->load(['tasks', 'completedByUsers']);
+        $module->load(['tasks', 'assignedStudents']);
 
         // Alle Lernenden des Supervisors laden, die noch NICHT diesem Modul zugewiesen sind
-        $assignedUserIds = $module->completedByUsers->pluck('id')->toArray();
+        $assignedUserIds = $module->assignedStudents->pluck('id')->toArray();
         $availableStudents = auth()->user()->students()
             ->whereNotIn('id', $assignedUserIds)
             ->get();
@@ -71,7 +71,7 @@ class ModuleController extends Controller
             'students.*' => ['required', 'exists:users,id'],
         ]);
 
-        $module->completedByUsers()->attach($validated['students'], ['has_completed_user' => false]);
+        $module->assignedStudents()->attach($validated['students'], ['has_completed_user' => false]);
 
         return back()->with('success', 'Lernende erfolgreich zugewiesen.');
     }

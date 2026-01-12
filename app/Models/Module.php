@@ -24,8 +24,8 @@ class Module extends Model
         return $this->hasMany(Task::class, 'module_id');
     }
 
-    // Many users complete a module
-    public function completedByUsers(): BelongsToMany
+    // Many students are assigned to a module
+    public function assignedStudents(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'has_user_completed', 'module_id', 'user_id')
             ->withPivot('has_completed_user');

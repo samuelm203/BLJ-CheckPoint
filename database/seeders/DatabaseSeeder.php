@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 8. Mark the second module as completed for the user
-        $user->completedModules()->attach($module->module_id, [
+        $user->assignedModules()->attach($module->module_id, [
             'has_completed_user' => true,
         ]);
 

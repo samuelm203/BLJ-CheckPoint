@@ -9,8 +9,11 @@
             <div class="flex flex-wrap gap-6 items-center">
                 @foreach($alleModule as $module)
                     <div class="relative group">
-                        <a href="{{ route('supervisor.modules.show', $module) }}" class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
-                            {{ $module->module_name }}
+                        <a href="{{ route('supervisor.modules.show', $module) }}" class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex flex-col items-center justify-center text-white p-2 text-center transition-transform hover:scale-105 cursor-pointer">
+                            <span class="font-semibold text-sm">{{ $module->module_name }}</span>
+                            <span class="text-[10px] mt-2 bg-white/20 px-2 py-0.5 rounded-full">
+                                {{ $module->assigned_students_count }} Lernende
+                            </span>
                         </a>
                         <button onclick="openAddTaskModal('{{ $module->module_id }}', '{{ $module->module_name }}')" class="absolute -top-2 -right-2 bg-white text-[#b05555] rounded-full w-8 h-8 flex items-center justify-center shadow-md border border-[#b05555] opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110">
                             <span class="text-xl font-bold">+</span>

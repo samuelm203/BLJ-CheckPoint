@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Module;
 use Illuminate\Support\Facades\Auth;
 
 class StudentDashboardController extends Controller
@@ -11,9 +10,12 @@ class StudentDashboardController extends Controller
     {
         $user = Auth::user();
 
-        $alleModule = Module::all();
+        // Get all modules assigned to the student
+        $assignedModules = $user->assignedModules;
 
-        $abgeschlosseneModule = $user->completedModules;
+        // Separate into open and completed
+        $alleModule = $assignedModules->where('pivot.has_completed_user', false);
+        $abgeschlosseneModule = $assignedModules->where('pivot.has_completed_user', true);
 
         return view('student.student_dashboard', compact('user', 'alleModule', 'abgeschlosseneModule'));
     }

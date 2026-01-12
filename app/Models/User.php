@@ -77,9 +77,9 @@ class User extends Authenticatable
     }
 
     /**
-     * BEZIEHUNG: Ein User hat viele Module abgeschlossen (n:m)
+     * BEZIEHUNG: Ein User hat viele Module zugewiesen (n:m)
      */
-    public function completedModules(): BelongsToMany
+    public function assignedModules(): BelongsToMany
     {
         return $this->belongsToMany(Module::class, 'has_user_completed', 'user_id', 'module_id')
             ->withPivot('has_completed_user');

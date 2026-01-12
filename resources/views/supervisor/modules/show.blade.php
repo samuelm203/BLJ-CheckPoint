@@ -57,7 +57,7 @@
                     </button>
                 </div>
                 <div class="space-y-4">
-                    @forelse($module->completedByUsers as $student)
+                    @forelse($module->assignedStudents as $student)
                         <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border border-gray-100">
                             <div>
                                 <p class="font-bold text-black">{{ $student->first_name }} {{ $student->surname }}</p>
