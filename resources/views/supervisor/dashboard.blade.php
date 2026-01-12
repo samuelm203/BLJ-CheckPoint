@@ -6,8 +6,8 @@
 
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-6 text-black">Kurse deiner Lernenden</h2>
-            <div class="flex flex-wrap gap-6">
-                @forelse($alleModule as $module)
+            <div class="flex flex-wrap gap-6 items-center">
+                @foreach($alleModule as $module)
                     <div class="relative group">
                         <a href="{{ route('supervisor.modules.show', $module) }}" class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
                             {{ $module->module_name }}
@@ -16,13 +16,15 @@
                             <span class="text-xl font-bold">+</span>
                         </button>
                     </div>
-                @empty
-                    <p class="text-gray-600">Es sind noch keine Kurse vorhanden.</p>
-                @endforelse
+                @endforeach
 
-                <button onclick="document.getElementById('add-module-modal').classList.remove('hidden')" class="w-32 h-32 bg-white/50 border-4 border-dashed border-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-[#b05555] text-5xl font-bold transition-transform hover:scale-105 cursor-pointer">
-                    +
+                <button onclick="document.getElementById('add-module-modal').classList.remove('hidden')" class="w-32 h-32 bg-white/50 border-4 border-dashed border-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-[#b05555] text-5xl font-bold transition-transform hover:scale-105 cursor-pointer group" title="Neuen Kurs erstellen">
+                    <span class="group-hover:scale-110 transition-transform">+</span>
                 </button>
+
+                @if($alleModule->isEmpty())
+                    <p class="text-gray-600">Es sind noch keine Kurse vorhanden. Erstelle deinen ersten Kurs!</p>
+                @endif
             </div>
         </div>
 

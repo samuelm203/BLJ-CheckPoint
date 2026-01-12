@@ -6,28 +6,26 @@
 
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-6 text-black">Meine Kurse</h2>
-            <div class="flex flex-wrap gap-6">
+            <div class="flex flex-wrap gap-6 items-center">
                 @forelse($alleModule as $module)
                     <div class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
                         {{ $module->module_name }}
                     </div>
                 @empty
-                    <p class="text-gray-600">Du hast keine offene Kurse</p>
+                    <p class="text-gray-600">Du hast keine offenen Kurse.</p>
                 @endforelse
             </div>
         </div>
 
         <div>
             <h2 class="text-2xl font-bold mb-6 text-black">Abgeschlossene Kurse</h2>
-            <div class="flex flex-wrap gap-6">
+            <div class="flex flex-wrap gap-6 items-center">
                 @forelse($abgeschlosseneModule as $module )
                     <div class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
                         {{ $module->module_name }}
                     </div>
                 @empty
-                    <div class="flex flex-wrap gap-6">
-                        <p class="text-gray-600">Du hast noch keine Kurse abgeschlossen.</p>
-                    </div>
+                    <p class="text-gray-600">Du hast noch keine Kurse abgeschlossen.</p>
                 @endforelse
             </div>
         </div>

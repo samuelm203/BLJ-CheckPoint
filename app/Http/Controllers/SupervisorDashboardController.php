@@ -11,8 +11,8 @@ class SupervisorDashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Alle Module abrufen
-        $alleModule = Module::all();
+        // Nur die Module abrufen, die diesem Supervisor gehören
+        $alleModule = $user->createdModules;
 
         // Nur die Lernenden laden, die diesem Supervisor zugewiesen sind
         $lernende = $user->students;
