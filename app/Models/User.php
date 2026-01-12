@@ -41,6 +41,14 @@ class User extends Authenticatable
     }
 
     /**
+     * BEZIEHUNG: Ein Supervisor hat viele erstellte Module (1:n)
+     */
+    public function createdModules(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Module::class, 'user_id');
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      */
     protected $hidden = [

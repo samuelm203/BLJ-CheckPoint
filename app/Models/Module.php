@@ -10,7 +10,13 @@ class Module extends Model
 {
     protected $primaryKey = 'module_id';
 
-    protected $fillable = ['module_name', 'description'];
+    protected $fillable = ['module_name', 'description', 'user_id'];
+
+    // A module belongs to a supervisor (user)
+    public function supervisor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     // A module has many tasks
     public function tasks(): HasMany

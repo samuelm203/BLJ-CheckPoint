@@ -15,7 +15,23 @@ test('supervisor can create a module', function () {
     $this->assertDatabaseHas('modules', [
         'module_name' => 'Neuer Testkurs',
         'description' => 'Eine Testbeschreibung',
+        'user_id' => $supervisor->id,
     ]);
+});
+
+test('supervisor can only see their own modules on dashboard', function () {
+    $supervisor1 = User::factory()->supervisor()->create();
+    $supervisor2 = User::factory()->supervisor()->create();
+
+    $module1 = \App\Models\Module::create(['module_name' => 'Kurs von Supervisor 1', 'user_id' => $supervisor1->id]);
+    $module2 = \App\Models\Module::create(['module_name' => 'Kurs von Supervisor 2', 'user_id' => $supervisor2->id]);
+
+    $response = $this->actingAs($supervisor1)
+        ->get(route('supervisor.dashboard'));
+
+    $response->assertOk();
+    $response->assertSee('Kurs von Supervisor 1');
+    $response->assertDontSee('Kurs von Supervisor 2');
 });
 
 test('supervisor can create a module with tasks and students', function () {

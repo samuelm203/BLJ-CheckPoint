@@ -10,7 +10,18 @@ class ModuleController extends Controller
 {
     public function index()
     {
-        $modules = Module::with('tasks')->get();
+        $user = auth()->user();
+
+        if ($user && $user->role == 2) {
+            // Coach sieht seine eigenen Module
+            $modules = $user->createdModules()->with('tasks')->get();
+        } elseif ($user && $user->role == 1) {
+            // Student sieht die Module, denen er zugewiesen ist
+            $modules = $user->completedModules()->with('tasks')->get();
+        } else {
+            // Nicht eingeloggt oder andere Rolle - leere Liste oder alle öffentlichen
+            $modules = Module::with('tasks')->get();
+        }
 
         return view('modules.index', compact('modules'));
     }
@@ -22,6 +33,7 @@ class ModuleController extends Controller
         $module = Module::create([
             'module_name' => $validated['module_name'],
             'description' => $validated['description'],
+            'user_id' => auth()->id(),
         ]);
 
         if (! empty($validated['tasks'])) {
