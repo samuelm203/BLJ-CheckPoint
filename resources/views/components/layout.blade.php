@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de" class="h-full">
 <head>
+    <meta name="google-site-verification" content="ALsL9Mv5PyX-mLyUtKcqbch_8zQLHH2GibTOSnyx2rk" />
     <link rel="icon" type="image/png" href="{{ asset('CheckPoint_Logo.png') }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

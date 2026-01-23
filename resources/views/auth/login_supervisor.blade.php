@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+    <meta name="google-site-verification" content="ALsL9Mv5PyX-mLyUtKcqbch_8zQLHH2GibTOSnyx2rk" />
     <meta charset="UTF-8">
     <title>Anmeldung & Registrierung</title>
     <style>
