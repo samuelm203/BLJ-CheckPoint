@@ -79,4 +79,6 @@ Route::middleware(['auth', 'role:2'])->prefix('supervisor')->group(function () {
 Route::middleware(['auth', 'role:1'])->prefix('student')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\StudentDashboardController::class, 'index'])
         ->name('student.dashboard');
+    Route::post('/tasks/{task}/toggle', [App\Http\Controllers\TaskController::class, 'toggleComplete'])
+        ->name('student.tasks.toggle');
 });

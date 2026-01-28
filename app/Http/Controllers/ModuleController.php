@@ -53,7 +53,9 @@ class ModuleController extends Controller
 
     public function show(Module $module): \Illuminate\View\View
     {
-        $module->load(['tasks', 'assignedStudents']);
+        $module->load(['tasks', 'assignedStudents.tasks' => function ($query) use ($module) {
+            $query->where('tasks.module_id', $module->module_id);
+        }]);
 
         // Alle Lernenden des Supervisors laden, die noch NICHT diesem Modul zugewiesen sind
         $assignedUserIds = $module->assignedStudents->pluck('id')->toArray();

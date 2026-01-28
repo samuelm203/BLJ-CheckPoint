@@ -58,17 +58,57 @@
                 </div>
                 <div class="space-y-4">
                     @forelse($module->assignedStudents as $student)
-                        <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border border-gray-100">
-                            <div>
-                                <p class="font-bold text-black">{{ $student->first_name }} {{ $student->surname }}</p>
-                                <p class="text-xs text-gray-500">{{ $student->email }}</p>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div class="p-4 flex justify-between items-center bg-white">
+                                <div>
+                                    <p class="font-bold text-black text-lg">{{ $student->first_name }} {{ $student->surname }}</p>
+                                    <p class="text-xs text-gray-500">{{ $student->email }}</p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    @php
+                                        $studentCompletedCount = $student->tasks->where('pivot.is_completed', true)->count();
+                                        $totalTasksCount = $module->tasks->count();
+                                        $studentPercentage = $totalTasksCount > 0 ? round(($studentCompletedCount / $totalTasksCount) * 100) : 0;
+                                    @endphp
+                                    <div class="text-right">
+                                        <div class="text-xs font-bold text-gray-400 mb-1">{{ $studentCompletedCount }} / {{ $totalTasksCount }} Aufgaben</div>
+                                        <div class="w-24 bg-gray-200 rounded-full h-1.5">
+                                            <div class="bg-[#b05555] h-1.5 rounded-full" style="width: {{ $studentPercentage }}%"></div>
+                                        </div>
+                                    </div>
+                                    <button onclick="toggleStudentTasks('{{ $student->id }}')" class="text-[#b05555] hover:bg-[#b05555]/10 p-2 rounded-lg transition-colors">
+                                        <svg id="icon-{{ $student->id }}" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                @if($student->pivot->has_completed_user)
-                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">Abgeschlossen</span>
-                                @else
-                                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-bold">In Bearbeitung</span>
-                                @endif
+
+                            <!-- Detaillierte Aufgabenliste des Lernenden -->
+                            <div id="tasks-{{ $student->id }}" class="hidden bg-gray-50 border-t border-gray-100 p-4">
+                                <div class="grid grid-cols-1 gap-2">
+                                    @foreach($module->tasks as $task)
+                                        @php
+                                            $taskStatus = $student->tasks->where('task_id', $task->task_id)->first();
+                                            $isTaskCompleted = $taskStatus ? $taskStatus->pivot->is_completed : false;
+                                        @endphp
+                                        <div class="flex items-center justify-between p-2 rounded-lg {{ $isTaskCompleted ? 'bg-green-50' : 'bg-white' }} border border-gray-200">
+                                            <span class="text-sm {{ $isTaskCompleted ? 'text-green-700 font-semibold' : 'text-gray-600' }}">
+                                                {{ $task->title }}
+                                            </span>
+                                            @if($isTaskCompleted)
+                                                <span class="flex items-center text-green-600">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span class="text-[10px] ml-1">{{ \Carbon\Carbon::parse($taskStatus->pivot->completion_date)->format('d.m.Y') }}</span>
+                                                </span>
+                                            @else
+                                                <span class="text-[10px] text-gray-400 font-bold uppercase">Offen</span>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -144,4 +184,19 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function toggleStudentTasks(studentId) {
+            const container = document.getElementById('tasks-' + studentId);
+            const icon = document.getElementById('icon-' + studentId);
+
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                container.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
 </x-layout>
