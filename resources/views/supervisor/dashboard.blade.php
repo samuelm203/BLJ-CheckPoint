@@ -64,14 +64,43 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($lernende as $student)
-                    <div class="bg-white p-6 rounded-xl shadow-sm flex justify-between items-center border-l-8 border-[#b05555]">
-                        <div>
-                            <p class="text-xl font-bold text-black">{{ $student->first_name }} {{ $student->surname }}</p>
-                            <p class="text-sm text-gray-500">{{ $student->email }}</p>
+                    @php
+                        $totalTasks = $student->assignedModules->flatMap->tasks->count();
+                        $completedTasks = $student->tasks->count();
+                        $percentage = $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0;
+                    @endphp
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-8 border-[#b05555] flex flex-col gap-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-xl font-bold text-black">{{ $student->first_name }} {{ $student->surname }}</p>
+                                <p class="text-sm text-gray-500">{{ $student->email }}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="openEditStudentModal({{ json_encode($student) }})" class="text-gray-400 hover:text-[#b05555] transition-colors" title="Bearbeiten">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                    </svg>
+                                </button>
+                                <form action="{{ route('supervisor.students.destroy', $student) }}" method="POST" onsubmit="return confirm('Möchten Sie diesen Lernenden wirklich löschen?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-gray-400 hover:text-red-600 transition-colors" title="Löschen">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="flex gap-2">
-                            <div class="w-4 h-4 bg-green-500 rounded-full"></div>
-                            <div class="w-4 h-4 bg-red-400 rounded-full"></div>
+
+                        <div class="mt-2">
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span>Fortschritt</span>
+                                <span>{{ $completedTasks }} / {{ $totalTasks }} Aufgaben</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full transition-all duration-500" style="width: {{ $percentage }}%"></div>
+                            </div>
                         </div>
                     </div>
                 @empty
@@ -130,7 +159,7 @@
     </div>
 
     <!-- Modal für neuen Lernenden -->
-    <div id="add-student-modal" class="{{ $errors->any() && !$errors->has('module_name') && !$errors->has('title') ? '' : 'hidden' }} fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div id="add-student-modal" class="{{ $errors->any() && !$errors->has('module_name') && !$errors->has('title') && !session('is_editing') ? '' : 'hidden' }} fixed inset-0 bg-black/50 flex items-center justify-center z-50">
         <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
             <h3 class="text-2xl font-bold mb-6">Neuen Lernenden anlegen</h3>
             <form action="{{ route('supervisor.students.store') }}" method="POST">
@@ -165,6 +194,43 @@
         </div>
     </div>
 
+    <!-- Modal für Lernenden bearbeiten -->
+    <div id="edit-student-modal" class="{{ session('is_editing') ? '' : 'hidden' }} fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+            <h3 class="text-2xl font-bold mb-6">Lernenden bearbeiten</h3>
+            <form id="edit-student-form" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Vorname</label>
+                        <input type="text" name="first_name" id="edit_first_name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#b05555] focus:ring-[#b05555]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nachname</label>
+                        <input type="text" name="surname" id="edit_surname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#b05555] focus:ring-[#b05555]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">E-Mail</label>
+                        <input type="email" name="email" id="edit_email" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#b05555] focus:ring-[#b05555]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Passwort (leer lassen für keine Änderung)</label>
+                        <input type="password" name="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#b05555] focus:ring-[#b05555]">
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-end gap-4">
+                    <button type="button" onclick="document.getElementById('edit-student-modal').classList.add('hidden')" class="px-4 py-2 text-gray-600 hover:text-gray-800">
+                        Abbrechen
+                    </button>
+                    <button type="submit" class="bg-[#b05555] text-white px-6 py-2 rounded-lg font-bold hover:bg-[#a04444] transition-colors">
+                        Aktualisieren
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal für neue Aufgabe -->
     <div id="add-task-modal" class="{{ $errors->has('title') ? '' : 'hidden' }} fixed inset-0 bg-black/50 flex items-center justify-center z-50">
         <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
@@ -192,6 +258,14 @@
     </div>
 
     <script>
+        function openEditStudentModal(student) {
+            document.getElementById('edit-student-form').action = '/supervisor/students/' + student.id;
+            document.getElementById('edit_first_name').value = student.first_name;
+            document.getElementById('edit_surname').value = student.surname;
+            document.getElementById('edit_email').value = student.email;
+            document.getElementById('edit-student-modal').classList.remove('hidden');
+        }
+
         function openAddTaskModal(moduleId, moduleName) {
             document.getElementById('task-module-id').value = moduleId;
             document.getElementById('task-modal-module-name').innerText = 'Kurs: ' + moduleName;

@@ -61,6 +61,10 @@ Route::middleware(['auth', 'role:2'])->prefix('supervisor')->group(function () {
         ->name('supervisor.dashboard');
     Route::post('/students', [App\Http\Controllers\StudentController::class, 'store'])
         ->name('supervisor.students.store');
+    Route::put('/students/{student}', [App\Http\Controllers\StudentController::class, 'update'])
+        ->name('supervisor.students.update');
+    Route::delete('/students/{student}', [App\Http\Controllers\StudentController::class, 'destroy'])
+        ->name('supervisor.students.destroy');
     Route::post('/modules', [ModuleController::class, 'store'])
         ->name('supervisor.modules.store');
     Route::get('/modules/{module}', [ModuleController::class, 'show'])
