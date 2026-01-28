@@ -43,7 +43,7 @@ it('redirects logged in users from login page to dashboard', function () {
     $response->assertRedirect('/student/dashboard');
 });
 
-it('remembers user if remember me is checked', function () {
+it('does not remember user if remember me is passed', function () {
     $password = 'password123';
     $user = User::factory()->create([
         'password' => bcrypt($password),
@@ -59,6 +59,9 @@ it('remembers user if remember me is checked', function () {
     $response->assertRedirect('/student/dashboard');
 
     $this->assertAuthenticatedAs($user);
+
+    // Prüfen, ob das "Remember Me" Cookie NICHT gesetzt wurde.
+    $response->assertCookieMissing(Auth::getRecallerName());
 });
 
 it('hides the current page link in the navbar', function () {

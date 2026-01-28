@@ -40,11 +40,9 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $remember = $request->has('remember');
-
         $expectedRole = $request->is('supervisor/*') ? '2' : '1';
 
-        if (Auth::attempt(array_merge($credentials, ['role' => $expectedRole]), $remember)) {
+        if (Auth::attempt(array_merge($credentials, ['role' => $expectedRole]))) {
             $user = Auth::user();
 
             $user->update([
