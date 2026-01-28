@@ -25,7 +25,7 @@ class StoreModuleRequest extends FormRequest
             'module_name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'tasks' => ['nullable', 'array'],
-            'tasks.*' => ['required', 'string', 'max:255'],
+            'tasks.*' => ['nullable', 'string', 'max:255'],
             'students' => ['nullable', 'array'],
             'students.*' => ['required', 'exists:users,id'],
         ];

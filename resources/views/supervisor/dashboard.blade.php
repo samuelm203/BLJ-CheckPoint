@@ -74,8 +74,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($lernende as $student)
                     @php
-                        $totalTasks = $student->assignedModules->flatMap->tasks->count();
-                        $completedTasks = $student->tasks->count();
+                        $aktiveZugeordneteModule = $student->assignedModules->where('is_completed', false);
+                        $totalTasks = $aktiveZugeordneteModule->flatMap->tasks->count();
+                        $completedTasks = $student->tasks()
+                            ->whereHas('module', function($query) {
+                                $query->where('is_completed', false);
+                            })
+                            ->count();
                         $percentage = $totalTasks > 0 ? round(($completedTasks / $totalTasks) * 100) : 0;
                     @endphp
                     <div class="bg-white p-6 rounded-xl shadow-sm border-l-8 border-[#b05555] flex flex-col gap-4">
@@ -142,6 +147,7 @@
                             <div class="flex gap-2">
                                 <input type="text" name="tasks[]" placeholder="Aufgabentitel" class="w-full bg-transparent border-b border-white text-white placeholder-white/70 focus:outline-none py-1">
                                 <button type="button" onclick="addTaskField()" class="text-white font-bold text-xl">+</button>
+                                <button type="button" onclick="this.parentElement.querySelector('input').value = ''" class="text-white font-bold text-xl" title="Feld leeren">✕</button>
                             </div>
                         </div>
                     </div>
@@ -287,7 +293,8 @@
             div.className = 'flex gap-2';
             div.innerHTML = `
                 <input type="text" name="tasks[]" placeholder="Aufgabentitel" class="w-full bg-transparent border-b border-white text-white placeholder-white/70 focus:outline-none py-1">
-                <button type="button" onclick="this.parentElement.remove()" class="text-white font-bold text-xl">✕</button>
+                <button type="button" onclick="addTaskField()" class="text-white font-bold text-xl">+</button>
+                <button type="button" onclick="this.parentElement.remove()" class="text-white font-bold text-xl" title="Feld entfernen">✕</button>
             `;
             container.appendChild(div);
         }

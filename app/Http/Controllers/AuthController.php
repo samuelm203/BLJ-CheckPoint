@@ -19,12 +19,12 @@ class AuthController extends Controller
             return redirect()->route('student.dashboard');
         }
 
-        // Wenn die URL mit 'supervisor/' beginnt
+        // Wenn die URL mit supervisor/ beginnt
         if ($request->is('supervisor/*')) {
             return view('auth.login_supervisor');
         }
 
-        // Standardmäßig für Students
+        // Standardmässig für Students
         return view('auth.login_student');
     }
 

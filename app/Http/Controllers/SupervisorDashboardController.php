@@ -29,8 +29,15 @@ class SupervisorDashboardController extends Controller
             'tasks' => function ($query) {
                 $query->wherePivot('is_completed', true);
             },
-            'assignedModules.tasks',
-        ])->get();
+            'assignedModules' => function ($query) {
+                $query->with('tasks');
+            },
+        ])->get()
+            ->sortBy(function ($student) {
+                $hasActiveModules = $student->assignedModules->where('is_completed', false)->isNotEmpty();
+
+                return $hasActiveModules ? 0 : 1;
+            });
 
         return view('supervisor.dashboard', compact('user', 'aktiveModule', 'abgeschlosseneModule', 'lernende'));
     }
