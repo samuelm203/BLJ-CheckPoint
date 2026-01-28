@@ -70,3 +70,69 @@ it('shows student progress to supervisor in module view', function () {
     $response->assertSee('1 / 1 Aufgaben');
     $response->assertSee('Task A');
 });
+
+it('allows supervisor to toggle module completion', function () {
+    $supervisor = User::factory()->supervisor()->create();
+    $module = Module::create([
+        'module_name' => 'Complete Me',
+        'user_id' => $supervisor->id,
+    ]);
+
+    $this->actingAs($supervisor)
+        ->post(route('supervisor.modules.toggle-complete', $module))
+        ->assertRedirect();
+
+    expect($module->fresh()->is_completed)->toBeTrue();
+
+    $this->actingAs($supervisor)
+        ->post(route('supervisor.modules.toggle-complete', $module))
+        ->assertRedirect();
+
+    expect($module->fresh()->is_completed)->toBeFalse();
+});
+
+it('shows completed modules in separate section on supervisor dashboard', function () {
+    $supervisor = User::factory()->supervisor()->create();
+    $module = Module::create([
+        'module_name' => 'Done Module',
+        'user_id' => $supervisor->id,
+        'is_completed' => true,
+    ]);
+
+    $response = $this->actingAs($supervisor)->get(route('supervisor.dashboard'));
+
+    $response->assertStatus(200);
+    $response->assertSee('Abgeschlossene Kurse');
+    $response->assertSee('Done Module');
+});
+
+it('shows only modules on student dashboard', function () {
+    $student = User::factory()->student()->create();
+    $module = Module::create([
+        'module_name' => 'Learn This',
+        'user_id' => User::factory()->supervisor()->create()->id,
+    ]);
+    $module->assignedStudents()->attach($student->id);
+    Task::create(['title' => 'Secret Task', 'module_id' => $module->module_id]);
+
+    $response = $this->actingAs($student)->get(route('student.dashboard'));
+
+    $response->assertStatus(200);
+    $response->assertSee('Learn This');
+    $response->assertDontSee('Secret Task');
+});
+
+it('allows student to see tasks in module detail view', function () {
+    $student = User::factory()->student()->create();
+    $module = Module::create([
+        'module_name' => 'Learn This',
+        'user_id' => User::factory()->supervisor()->create()->id,
+    ]);
+    $module->assignedStudents()->attach($student->id);
+    Task::create(['title' => 'Visible Task', 'module_id' => $module->module_id]);
+
+    $response = $this->actingAs($student)->get(route('student.modules.show', $module));
+
+    $response->assertStatus(200);
+    $response->assertSee('Visible Task');
+});

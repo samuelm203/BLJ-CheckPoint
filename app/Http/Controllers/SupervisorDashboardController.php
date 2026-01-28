@@ -11,8 +11,17 @@ class SupervisorDashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Nur die Module abrufen, die diesem Supervisor gehören, inkl. Anzahl der Lernenden
-        $alleModule = $user->createdModules()->withCount('assignedStudents')->get();
+        // Nur die aktiven Module abrufen, die diesem Supervisor gehören
+        $aktiveModule = $user->createdModules()
+            ->where('is_completed', false)
+            ->withCount('assignedStudents')
+            ->get();
+
+        // Abgeschlossene Module
+        $abgeschlosseneModule = $user->createdModules()
+            ->where('is_completed', true)
+            ->withCount('assignedStudents')
+            ->get();
 
         // Nur die Lernenden laden, die diesem Supervisor zugewiesen sind
         // Inklusive Fortschritt (Anzahl abgeschlossener Tasks vs. Gesamtanzahl Tasks in zugewiesenen Modulen)
@@ -23,6 +32,6 @@ class SupervisorDashboardController extends Controller
             'assignedModules.tasks',
         ])->get();
 
-        return view('supervisor.dashboard', compact('user', 'alleModule', 'lernende'));
+        return view('supervisor.dashboard', compact('user', 'aktiveModule', 'abgeschlosseneModule', 'lernende'));
     }
 }

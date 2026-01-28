@@ -7,7 +7,7 @@
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-6 text-black">Kurse deiner Lernenden</h2>
             <div class="flex flex-wrap gap-6 items-center">
-                @foreach($alleModule as $module)
+                @foreach($aktiveModule as $module)
                     <div class="relative group">
                         <a href="{{ route('supervisor.modules.show', $module) }}" class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex flex-col items-center justify-center text-white p-2 text-center transition-transform hover:scale-105 cursor-pointer">
                             <span class="font-semibold text-sm">{{ $module->module_name }}</span>
@@ -25,16 +25,25 @@
                     <span class="group-hover:scale-110 transition-transform">+</span>
                 </button>
 
-                @if($alleModule->isEmpty())
-                    <p class="text-gray-600">Es sind noch keine Kurse vorhanden. Erstelle deinen ersten Kurs!</p>
+                @if($aktiveModule->isEmpty())
+                    <p class="text-gray-600">Es sind noch keine aktiven Kurse vorhanden. Erstelle deinen ersten Kurs!</p>
                 @endif
             </div>
         </div>
 
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-6 text-black">Abgeschlossene Kurse</h2>
-            <div class="flex flex-wrap gap-6">
-                <p class="text-gray-600">Momentan keine statistischen Daten verfügbar.</p>
+            <div class="flex flex-wrap gap-6 items-center">
+                @forelse($abgeschlosseneModule as $module)
+                    <a href="{{ route('supervisor.modules.show', $module) }}" class="w-32 h-32 bg-gray-400 rounded-xl shadow-sm flex flex-col items-center justify-center text-white p-2 text-center transition-transform hover:scale-105 cursor-pointer grayscale hover:grayscale-0">
+                        <span class="font-semibold text-sm">{{ $module->module_name }}</span>
+                        <span class="text-[10px] mt-2 bg-white/20 px-2 py-0.5 rounded-full">
+                            {{ $module->assigned_students_count }} Lernende
+                        </span>
+                    </a>
+                @empty
+                    <p class="text-gray-600">Momentan keine abgeschlossenen Kurse vorhanden.</p>
+                @endforelse
             </div>
         </div>
 

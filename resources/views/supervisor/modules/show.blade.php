@@ -4,9 +4,17 @@
             ← Zurück zum Dashboard
         </a>
 
-        <div class="bg-white p-8 rounded-2xl shadow-sm border-l-8 border-[#b05555] mb-12">
-            <h1 class="text-4xl font-bold mb-4 text-black">{{ $module->module_name }}</h1>
-            <p class="text-gray-600 text-lg">{{ $module->description ?? 'Keine Beschreibung vorhanden.' }}</p>
+        <div class="bg-white p-8 rounded-2xl shadow-sm border-l-8 border-[#b05555] mb-12 flex justify-between items-start">
+            <div>
+                <h1 class="text-4xl font-bold mb-4 text-black">{{ $module->module_name }}</h1>
+                <p class="text-gray-600 text-lg">{{ $module->description ?? 'Keine Beschreibung vorhanden.' }}</p>
+            </div>
+            <form action="{{ route('supervisor.modules.toggle-complete', $module) }}" method="POST">
+                @csrf
+                <button type="submit" class="px-6 py-2 rounded-lg font-bold transition-colors {{ $module->is_completed ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-200 text-gray-800 hover:bg-gray-300' }}">
+                    {{ $module->is_completed ? '✓ Abgeschlossen' : 'Kurs abschliessen' }}
+                </button>
+            </form>
         </div>
 
         @if(session('success'))

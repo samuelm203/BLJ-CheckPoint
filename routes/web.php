@@ -69,6 +69,8 @@ Route::middleware(['auth', 'role:2'])->prefix('supervisor')->group(function () {
         ->name('supervisor.modules.store');
     Route::get('/modules/{module}', [ModuleController::class, 'show'])
         ->name('supervisor.modules.show');
+    Route::post('/modules/{module}/toggle-complete', [ModuleController::class, 'toggleComplete'])
+        ->name('supervisor.modules.toggle-complete');
     Route::post('/modules/{module}/assign-students', [ModuleController::class, 'assignStudents'])
         ->name('supervisor.modules.assign-students');
     Route::post('/tasks', [App\Http\Controllers\TaskController::class, 'store'])
@@ -79,6 +81,8 @@ Route::middleware(['auth', 'role:2'])->prefix('supervisor')->group(function () {
 Route::middleware(['auth', 'role:1'])->prefix('student')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\StudentDashboardController::class, 'index'])
         ->name('student.dashboard');
+    Route::get('/modules/{module}', [App\Http\Controllers\StudentDashboardController::class, 'showModule'])
+        ->name('student.modules.show');
     Route::post('/tasks/{task}/toggle', [App\Http\Controllers\TaskController::class, 'toggleComplete'])
         ->name('student.tasks.toggle');
 });

@@ -10,7 +10,14 @@ class Module extends Model
 {
     protected $primaryKey = 'module_id';
 
-    protected $fillable = ['module_name', 'description', 'user_id'];
+    protected $fillable = ['module_name', 'description', 'user_id', 'is_completed'];
+
+    protected function casts(): array
+    {
+        return [
+            'is_completed' => 'boolean',
+        ];
+    }
 
     // A module belongs to a supervisor (user)
     public function supervisor(): \Illuminate\Database\Eloquent\Relations\BelongsTo

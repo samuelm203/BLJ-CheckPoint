@@ -77,4 +77,19 @@ class ModuleController extends Controller
 
         return back()->with('success', 'Lernende erfolgreich zugewiesen.');
     }
+
+    public function toggleComplete(Module $module): RedirectResponse
+    {
+        if ($module->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $module->update([
+            'is_completed' => ! $module->is_completed,
+        ]);
+
+        $message = $module->is_completed ? 'Kurs erfolgreich abgeschlossen.' : 'Kurs wieder geöffnet.';
+
+        return back()->with('success', $message);
+    }
 }

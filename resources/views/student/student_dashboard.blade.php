@@ -6,38 +6,11 @@
 
         <div class="mb-12">
             <h2 class="text-2xl font-bold mb-6 text-black">Meine Kurse</h2>
-            <div class="space-y-8">
+            <div class="flex flex-wrap gap-6 items-center">
                 @forelse($alleModule as $module)
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border-l-8 border-[#b05555]">
-                        <h3 class="text-xl font-bold mb-4 text-black">{{ $module->module_name }}</h3>
-
-                        @if($module->tasks->count() > 0)
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                @foreach($module->tasks as $task)
-                                    @php
-                                        $isCompleted = $task->users->first()?->pivot->is_completed ?? false;
-                                    @endphp
-                                    <form action="{{ route('student.tasks.toggle', $task) }}" method="POST" class="flex items-center p-3 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors">
-                                        @csrf
-                                        <button type="submit" class="flex items-center gap-3 w-full text-left">
-                                            <div class="w-6 h-6 rounded border-2 border-[#b05555] flex items-center justify-center {{ $isCompleted ? 'bg-[#b05555]' : 'bg-white' }}">
-                                                @if($isCompleted)
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                                    </svg>
-                                                @endif
-                                            </div>
-                                            <span class="{{ $isCompleted ? 'line-through text-gray-400' : 'text-gray-800 font-semibold' }}">
-                                                {{ $task->title }}
-                                            </span>
-                                        </button>
-                                    </form>
-                                @endforeach
-                            </div>
-                        @else
-                            <p class="text-gray-500 italic">Noch keine Aufgaben für diesen Kurs hinterlegt.</p>
-                        @endif
-                    </div>
+                    <a href="{{ route('student.modules.show', $module) }}" class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
+                        {{ $module->module_name }}
+                    </a>
                 @empty
                     <p class="text-gray-600">Du hast keine offenen Kurse.</p>
                 @endforelse
@@ -47,10 +20,10 @@
         <div>
             <h2 class="text-2xl font-bold mb-6 text-black">Abgeschlossene Kurse</h2>
             <div class="flex flex-wrap gap-6 items-center">
-                @forelse($abgeschlosseneModule as $module )
-                    <div class="w-32 h-32 bg-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer">
+                @forelse($abgeschlosseneModule as $module)
+                    <a href="{{ route('student.modules.show', $module) }}" class="w-32 h-32 bg-gray-400 rounded-xl shadow-sm flex items-center justify-center text-white p-4 text-center font-semibold transition-transform hover:scale-105 cursor-pointer grayscale hover:grayscale-0">
                         {{ $module->module_name }}
-                    </div>
+                    </a>
                 @empty
                     <p class="text-gray-600">Du hast noch keine Kurse abgeschlossen.</p>
                 @endforelse
