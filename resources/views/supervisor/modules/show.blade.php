@@ -4,14 +4,14 @@
             ← Zurück zum Dashboard
         </a>
 
-        <div class="bg-white p-8 rounded-2xl shadow-sm border-l-8 border-[#b05555] mb-12 flex justify-between items-start">
+        <div class="bg-[#b05555] p-8 rounded-2xl shadow-sm border-l-8 border-white/30 mb-12 flex justify-between items-start">
             <div>
-                <h1 class="text-4xl font-bold mb-4 text-black">{{ $module->module_name }}</h1>
-                <p class="text-gray-600 text-lg">{{ $module->description ?? 'Keine Beschreibung vorhanden.' }}</p>
+                <h1 class="text-4xl font-bold mb-4 text-white">{{ $module->module_name }}</h1>
+                <p class="text-white/80 text-lg">{{ $module->description ?? 'Keine Beschreibung vorhanden.' }}</p>
             </div>
             <form action="{{ route('supervisor.modules.toggle-complete', $module) }}" method="POST">
                 @csrf
-                <button type="submit" class="px-6 py-2 rounded-lg font-bold transition-colors {{ $module->is_completed ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-200 text-gray-800 hover:bg-gray-300' }}">
+                <button type="submit" class="px-6 py-2 rounded-lg font-bold transition-colors {{ $module->is_completed ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-white text-[#b05555] hover:bg-gray-100' }}">
                     {{ $module->is_completed ? '✓ Abgeschlossen' : 'Kurs abschliessen' }}
                 </button>
             </form>
@@ -44,8 +44,8 @@
                 </div>
                 <div class="space-y-4">
                     @forelse($module->tasks as $task)
-                        <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center border border-gray-100">
-                            <span class="font-semibold text-gray-800">{{ $task->title }}</span>
+                        <div class="bg-[#b05555] p-4 rounded-xl shadow-sm flex justify-between items-center border border-white/20">
+                            <span class="font-semibold text-white">{{ $task->title }}</span>
                             <div class="flex gap-2">
                                 <!-- Hier könnten Bearbeiten/Löschen Buttons hin -->
                             </div>
@@ -66,11 +66,11 @@
                 </div>
                 <div class="space-y-4">
                     @forelse($module->assignedStudents as $student)
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                            <div class="p-4 flex justify-between items-center bg-white">
+                        <div class="bg-[#b05555] rounded-xl shadow-sm border border-white/20 overflow-hidden">
+                            <div class="p-4 flex justify-between items-center bg-[#b05555]">
                                 <div>
-                                    <p class="font-bold text-black text-lg">{{ $student->first_name }} {{ $student->surname }}</p>
-                                    <p class="text-xs text-gray-500">{{ $student->email }}</p>
+                                    <p class="font-bold text-white text-lg">{{ $student->first_name }} {{ $student->surname }}</p>
+                                    <p class="text-xs text-white/60">{{ $student->email }}</p>
                                 </div>
                                 <div class="flex items-center gap-4">
                                     @php
@@ -79,12 +79,12 @@
                                         $studentPercentage = $totalTasksCount > 0 ? round(($studentCompletedCount / $totalTasksCount) * 100) : 0;
                                     @endphp
                                     <div class="text-right">
-                                        <div class="text-xs font-bold text-gray-400 mb-1">{{ $studentCompletedCount }} / {{ $totalTasksCount }} Aufgaben</div>
-                                        <div class="w-24 bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-[#b05555] h-1.5 rounded-full" style="width: {{ $studentPercentage }}%"></div>
+                                        <div class="text-xs font-bold text-white/40 mb-1">{{ $studentCompletedCount }} / {{ $totalTasksCount }} Aufgaben</div>
+                                        <div class="w-24 bg-white/20 rounded-full h-1.5">
+                                            <div class="bg-white h-1.5 rounded-full" style="width: {{ $studentPercentage }}%"></div>
                                         </div>
                                     </div>
-                                    <button onclick="toggleStudentTasks('{{ $student->id }}')" class="text-[#b05555] hover:bg-[#b05555]/10 p-2 rounded-lg transition-colors">
+                                    <button onclick="toggleStudentTasks('{{ $student->id }}')" class="text-white hover:bg-white/10 p-2 rounded-lg transition-colors">
                                         <svg id="icon-{{ $student->id }}" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                         </svg>
@@ -93,26 +93,26 @@
                             </div>
 
                             <!-- Detaillierte Aufgabenliste des Lernenden -->
-                            <div id="tasks-{{ $student->id }}" class="hidden bg-gray-50 border-t border-gray-100 p-4">
+                            <div id="tasks-{{ $student->id }}" class="hidden bg-black/10 border-t border-white/10 p-4">
                                 <div class="grid grid-cols-1 gap-2">
                                     @foreach($module->tasks as $task)
                                         @php
                                             $taskStatus = $student->tasks->where('task_id', $task->task_id)->first();
                                             $isTaskCompleted = $taskStatus ? $taskStatus->pivot->is_completed : false;
                                         @endphp
-                                        <div class="flex items-center justify-between p-2 rounded-lg {{ $isTaskCompleted ? 'bg-green-50' : 'bg-white' }} border border-gray-200">
-                                            <span class="text-sm {{ $isTaskCompleted ? 'text-green-700 font-semibold' : 'text-gray-600' }}">
+                                        <div class="flex items-center justify-between p-2 rounded-lg {{ $isTaskCompleted ? 'bg-white/10' : 'bg-transparent' }} border border-white/10">
+                                            <span class="text-sm {{ $isTaskCompleted ? 'text-white font-semibold' : 'text-white/60' }}">
                                                 {{ $task->title }}
                                             </span>
                                             @if($isTaskCompleted)
-                                                <span class="flex items-center text-green-600">
+                                                <span class="flex items-center text-white">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                     </svg>
                                                     <span class="text-[10px] ml-1">{{ \Carbon\Carbon::parse($taskStatus->pivot->completion_date)->format('d.m.Y') }}</span>
                                                 </span>
                                             @else
-                                                <span class="text-[10px] text-gray-400 font-bold uppercase">Offen</span>
+                                                <span class="text-[10px] text-white/30 font-bold uppercase">Offen</span>
                                             @endif
                                         </div>
                                     @endforeach
