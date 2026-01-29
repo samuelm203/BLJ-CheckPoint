@@ -21,7 +21,7 @@
                     </div>
                 @endforeach
 
-                <button onclick="document.getElementById('add-module-modal').classList.remove('hidden')" class="w-32 h-32 bg-white/50 border-4 border-dashed border-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-[#b05555] text-5xl font-bold transition-transform hover:scale-105 cursor-pointer group" title="Neuen Kurs erstellen">3<span class="group-hover:scale-110 transition-transform">+</span>
+                <button onclick="document.getElementById('add-module-modal').classList.remove('hidden')" class="w-32 h-32 bg-white/50 border-4 border-dashed border-[#b05555] rounded-xl shadow-sm flex items-center justify-center text-[#b05555] text-5xl font-bold transition-transform hover:scale-105 cursor-pointer group" title="Neuen Kurs erstellen"><span class="group-hover:scale-110 transition-transform">+</span>
                 </button>
 
                 @if($aktiveModule->isEmpty())
