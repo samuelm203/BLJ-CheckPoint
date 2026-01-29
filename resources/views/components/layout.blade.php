@@ -12,9 +12,9 @@
 
 <header class="bg-[#b05555] w-full">
     <nav class="mx-auto max-w-7xl flex items-center justify-between p-6">
-        <div>
+        <a href="{{ route('home') }}">
             <img src="/CheckPoint_Logo.png" alt="Logo" class="h-8 w-auto">
-        </div>
+        </a>
 
         <div class="flex font-semibold gap-x-6 items-center">
             @auth
@@ -62,8 +62,6 @@
         </div>
 
         <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
-            <a href="{{ route('about') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Über Mich</a>
-            <a href="{{ route('contact') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Kontakt</a>
             <a href="{{ route('legal-notice') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Impressum</a>
             <a href="{{ route('privacy') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Datenschutz</a>
         </nav>

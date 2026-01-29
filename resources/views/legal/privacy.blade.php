@@ -4,29 +4,49 @@
 
         <section class="space-y-8 text-gray-700 leading-relaxed">
             <div>
-                <h2 class="text-2xl font-bold text-black mb-4">1. Datenschutz auf einen Blick</h2>
+                <h2 class="text-2xl font-bold text-black mb-4 underline decoration-[#b05555]">1. Datenschutz auf einen Blick</h2>
                 <h3 class="text-xl font-semibold mb-2 italic">Allgemeine Hinweise</h3>
-                <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
+                <p>Basierend auf Artikel 13 der schweizerischen Bundesverfassung und den datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. Wir halten diese Bestimmungen ein. Persönliche Daten werden streng vertraulich behandelt und weder an Dritte verkauft noch weitergegeben.</p>
+                <p>In enger Zusammenarbeit mit unseren Hosting-Providern bemühen wir uns, die Datenbanken so gut wie möglich vor fremden Zugriffen, Verlusten, Missbrauch oder vor Fälschung zu schützen.</p>
+                <p>Diese Datenschutzerklärung erläutert zudem die Einhaltung der EU-Datenschutz-Grundverordnung (DSGVO), sofern diese anwendbar ist.</p>
             </div>
 
             <div>
-                <h2 class="text-2xl font-bold text-black mb-4">2. Datenerfassung auf dieser Website</h2>
-                <h3 class="text-xl font-semibold mb-2 italic">Wer ist verantwortlich für die Datenerfassung auf dieser Website?</h3>
-                <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.</p>
-
-                <h3 class="text-xl font-semibold mt-4 mb-2 italic">Wie erfassen wir Ihre Daten?</h3>
-                <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben.</p>
+                <h2 class="text-2xl font-bold text-black mb-4 underline decoration-[#b05555]">2. Verantwortliche Stelle</h2>
+                <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+                <p class="font-medium">
+                    Samuel M.<br>
+                    Musterstraße 123<br>
+                    CH-8000 Zürich<br>
+                    E-Mail: samuel@example.com
+                </p>
             </div>
 
             <div>
-                <h2 class="text-2xl font-bold text-black mb-4">3. Allgemeine Hinweise und Pflichtinformationen</h2>
-                <h3 class="text-xl font-semibold mb-2 italic">Datenschutz</h3>
-                <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
+                <h2 class="text-2xl font-bold text-black mb-4 underline decoration-[#b05555]">3. Datenerfassung auf dieser Website</h2>
+                <h3 class="text-xl font-semibold mb-2 italic">Server-Log-Files</h3>
+                <p>Der Provider dieser Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Files, die Ihr Browser automatisch an uns übermittelt. Dies sind:</p>
+                <ul class="list-disc ml-6 space-y-1">
+                    <li>Browsertyp und Browserversion</li>
+                    <li>Verwendetes Betriebssystem</li>
+                    <li>Referrer URL</li>
+                    <li>Hostname des zugreifenden Rechners</li>
+                    <li>Uhrzeit der Serveranfrage</li>
+                    <li>IP-Adresse</li>
+                </ul>
+                <p class="mt-2">Diese Daten sind nicht bestimmten Personen zuordenbar. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</p>
+
+                <h3 class="text-xl font-semibold mt-6 mb-2 italic">Kontaktformular</h3>
+                <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
             </div>
 
             <div>
-                <h2 class="text-2xl font-bold text-black mb-4">4. Analyse-Tools und Tools von Drittanbietern</h2>
-                <p>Beim Besuch dieser Website kann Ihr Surf-Verhalten statistisch ausgewertet werden. Das geschieht vor allem mit sogenannten Analyseprogrammen.</p>
+                <h2 class="text-2xl font-bold text-black mb-4 underline decoration-[#b05555]">4. Ihre Rechte</h2>
+                <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</p>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100 italic text-sm">
+                <p>Quelle: <a href="https://www.swissanwalt.ch" target="_blank" rel="noopener noreferrer" class="text-[#b05555] hover:underline">SwissAnwalt</a> (angepasst)</p>
             </div>
         </section>
     </div>

@@ -4,39 +4,43 @@
 
         <section class="space-y-6 text-gray-700 leading-relaxed text-lg">
             <div>
-                <h2 class="text-2xl font-bold text-black mb-3 italic">Angaben gemäß § 5 TMG</h2>
+                <h2 class="text-2xl font-bold text-black mb-3 italic">Kontaktadresse</h2>
                 <p>
                     Samuel M.<br>
                     Musterstraße 123<br>
-                    12345 Musterstadt
+                    CH-8000 Zürich<br>
+                    Schweiz
                 </p>
             </div>
 
             <div>
+                <h2 class="text-2xl font-bold text-black mb-3 italic">Vertretungsberechtigte Personen</h2>
+                <p>
+                    Samuel M., Inhaber
+                </p>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100">
                 <h2 class="text-2xl font-bold text-black mb-3 italic">Kontakt</h2>
                 <p>
-                    Telefon: +49 (0) 123 456789<br>
                     E-Mail: samuel@example.com
                 </p>
             </div>
 
             <div class="pt-6 border-t border-gray-100">
-                <h2 class="text-2xl font-bold text-black mb-3 italic">Redaktionell verantwortlich</h2>
-                <p>
-                    Samuel M.<br>
-                    Musterstraße 123<br>
-                    12345 Musterstadt
-                </p>
+                <h2 class="text-2xl font-bold text-black mb-3 italic">Haftungsausschluss</h2>
+                <p>Der Autor übernimmt keinerlei Gewähr hinsichtlich der inhaltlichen Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen.</p>
+                <p>Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, welche aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen, durch Missbrauch der Verbindung oder durch technische Störungen entstanden sind, werden ausgeschlossen.</p>
             </div>
 
             <div class="pt-6 border-t border-gray-100">
-                <h2 class="text-2xl font-bold text-black mb-3 italic">EU-Streitschlichtung</h2>
-                <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer" class="text-[#b05555] hover:underline">https://ec.europa.eu/consumers/odr/</a>. Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
+                <h2 class="text-2xl font-bold text-black mb-3 italic">Haftung für Links</h2>
+                <p>Verweise und Links auf Webseiten Dritter liegen ausserhalb unseres Verantwortungsbereichs. Es wird jegliche Verantwortung für solche Webseiten abgelehnt. Der Zugriff und die Nutzung solcher Webseiten erfolgen auf eigene Gefahr des Nutzers oder der Nutzerin.</p>
             </div>
 
             <div class="pt-6 border-t border-gray-100">
-                <h2 class="text-2xl font-bold text-black mb-3 italic">Verbraucherstreitbeilegung/Universalschlichtungsstelle</h2>
-                <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+                <h2 class="text-2xl font-bold text-black mb-3 italic">Urheberrechte</h2>
+                <p>Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf der Website gehören ausschliesslich der Firma Samuel M. oder den speziell genannten Rechtsinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung der Urheberrechtsträger im Voraus einzuholen.</p>
             </div>
         </section>
     </div>
