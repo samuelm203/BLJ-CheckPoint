@@ -54,5 +54,21 @@
     {{ $slot }}
 </main>
 
+<footer class="bg-white border-t border-gray-200 mt-auto">
+    <div class="mx-auto max-w-7xl px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+            <img src="/CheckPoint_Logo.png" alt="Logo" class="h-6 w-auto grayscale opacity-50">
+            <span class="text-gray-500 text-sm font-medium">© {{ date('Y') }} CheckPoint. Alle Rechte vorbehalten.</span>
+        </div>
+
+        <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2">
+            <a href="{{ route('about') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Über Mich</a>
+            <a href="{{ route('contact') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Kontakt</a>
+            <a href="{{ route('legal-notice') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Impressum</a>
+            <a href="{{ route('privacy') }}" class="text-sm text-gray-500 hover:text-[#b05555] transition-colors">Datenschutz</a>
+        </nav>
+    </div>
+</footer>
+
 </body>
 </html>

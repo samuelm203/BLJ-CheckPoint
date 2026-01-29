@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 Route::view('/about', 'start.about')->name('about');
 Route::view('/contact', 'start.contact')->name('contact');
-Route::view('/privacy', 'home')->name('privacy'); // Temporary fallback if views missing
-Route::view('/terms', 'home')->name('terms');     // Temporary fallback if views missing
+Route::view('/privacy', 'legal.privacy')->name('privacy');
+Route::view('/legal-notice', 'legal.legal-notice')->name('legal-notice');
+Route::view('/terms', 'legal.legal-notice')->name('terms'); // Redirect terms to legal notice for now
 
 /*
 |--------------------------------------------------------------------------
